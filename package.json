@@ -1,0 +1,23 @@
+{
+  "name": "ipm",
+  "version": "0.0.1",
+  "description": "An IOTA node peer manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iota",
+    "peer"
+  ],
+  "author": "Akash Goswami",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.5.0",
+    "express": "^4.15.3",
+    "gentelella": "^1.3.0",
+    "iota.lib.js": "^0.3.0",
+    "restler": "^3.4.0",
+    "socket.io": "^2.0.3"
+  }
+}
