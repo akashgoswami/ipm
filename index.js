@@ -9,7 +9,7 @@ var io = require('socket.io')(server);
 var async = require('async');
 var minimist = require('minimist');
 
-app.use(express.static('public'))
+app.use(express.static(__dirname+'/public'))
 var sockets = [];
 
 
@@ -174,7 +174,8 @@ setInterval(function(){
     getSystemInfo();
 },30000);
 
+var port = argv.port || 8888;
 
+console.log("Serving IOTA peer dashboard at http://localhost:"+port);
 
-
-server.listen(argv.port || 8888);
+server.listen(port);
