@@ -79,7 +79,14 @@ var peer = Vue.component('peer', {
               ]
             },
     options: {
-        responsive: true, maintainAspectRatio: false, lineTension: 0
+        responsive: true, maintainAspectRatio: false, lineTension: 0,
+        scales:
+        {
+            xAxes: [{
+                display: false
+            }]
+        }
+        
       }
     });
   },

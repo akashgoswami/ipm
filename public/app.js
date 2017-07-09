@@ -1,5 +1,5 @@
 var socket = io();
-const maxHistory = 10;
+const maxHistory = 16;
 Chart.defaults.global.legend.display = false;
 
 

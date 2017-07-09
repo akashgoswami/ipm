@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var rest = require('restler');
 var IOTA = require('iota.lib.js');
 var express = require('express')
@@ -5,9 +7,56 @@ var app = express()
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var async = require('async');
+var minimist = require('minimist');
 
 app.use(express.static('public'))
 var sockets = [];
+
+
+var argv = minimist(process.argv.slice(2), {
+    string: [ 'iri' ],    
+    alias: {
+        h: 'help',
+        i: 'iri',
+        r: 'refresh',
+        p: 'port'
+    }
+});
+
+if (argv.refresh) {
+    if (argv.refresh < 5 || argv.refresh > 600 )   
+    {
+        console.log("Refresh Value must be within 5 to 600 seconds.");
+        process.exit(0);
+    }
+}
+
+
+if (argv.help) printHelp();
+
+function printHelp()
+{
+
+    console.log("IPM:    IOTA Peer Manager");
+    console.log("        Manage and monitor IOTA peer health status in beautiful dashboard.");    
+
+    console.log("Usage:");        
+    console.log("ipm [--iri=iri_api_url] [--port=your_local_port] [--refresh=interval]");
+    console.log("  -i --iri       = The API endpoint for IOTA IRI implementation (Full Node). ");
+    console.log("  -p --port      = Local server port where the dashboard web server should be running");    
+    console.log("  -r --refresh   = Refresh interval in seconds for IRI statistics gathering (default 10s)");    
+    console.log("  -h --help      = print this message");    
+    console.log("");            
+    console.log("Example.");            
+    console.log("ipm -i http://127.0.0.1:14800 -p 8888");            
+    console.log("IPM will connect to IOTA endpoint and produce the status at localhost port 8888");            
+    console.log("To view the dashboard, simply open a browser and point to http://127.0.0.1:8888");                
+    console.log("");       
+    process.exit(0);
+};
+
+
+
 
 io.on('connection', function (s) {
   sockets.push(s);
@@ -63,15 +112,9 @@ io.on('connection', function (s) {
 
 });
 
-// Create IOTA instance with host and port as provider
-var iota = new IOTA({
-    'host': 'http://localhost',
-    'port': 14800
-});
-
 // Create IOTA instance directly with provider
 var iota = new IOTA({
-    'provider': 'http://localhost:14800'
+    'provider': (argv.iri || 'http://localhost:14800')
 });
 
 var gNodeInfo = {};
@@ -97,7 +140,7 @@ iota.api.getNeighbors(function(error, peers) {
     if (error) {
         console.error(error);
     } else {
-        console.log(peers);
+        //console.log(peers);
         gPeerInfo = peers;
         updatePeerInfo();
     }
@@ -107,7 +150,7 @@ iota.api.getNeighbors(function(error, peers) {
 setInterval(function(){
 // now you can start using all of the functions
     getNeighbours();
-},5000);
+}, argv.refresh*1000 || 10000);
 
 
 function getSystemInfo(){
@@ -116,7 +159,7 @@ iota.api.getNodeInfo(function(error, success) {
     if (error) {
         console.error(error);
     } else {
-        console.log(success);
+        //console.log(success);
         gNodeInfo = success;
         updateNodeInfo();
     }
@@ -124,12 +167,14 @@ iota.api.getNodeInfo(function(error, success) {
     
 }
 
-
+getSystemInfo();
+getNeighbours();
+    
 setInterval(function(){
     getSystemInfo();
-},10000);
+},30000);
 
 
 
 
-server.listen(8888);
+server.listen(argv.port || 8888);
