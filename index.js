@@ -41,14 +41,14 @@ function printHelp()
     console.log("        Manage and monitor IOTA peer health status in beautiful dashboard.");    
 
     console.log("Usage:");        
-    console.log("ipm [--iri=iri_api_url] [--port=your_local_port] [--refresh=interval]");
+    console.log("iota-pm [--iri=iri_api_url] [--port=your_local_port] [--refresh=interval]");
     console.log("  -i --iri       = The API endpoint for IOTA IRI implementation (Full Node). ");
     console.log("  -p --port      = Local server port where the dashboard web server should be running");    
     console.log("  -r --refresh   = Refresh interval in seconds for IRI statistics gathering (default 10s)");    
     console.log("  -h --help      = print this message");    
     console.log("");            
     console.log("Example.");            
-    console.log("ipm -i http://127.0.0.1:14800 -p 8888");            
+    console.log("iota-pm -i http://127.0.0.1:14800 -p 8888");            
     console.log("IPM will connect to IOTA endpoint and produce the status at localhost port 8888");            
     console.log("To view the dashboard, simply open a browser and point to http://127.0.0.1:8888");                
     console.log("");       

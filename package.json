@@ -1,7 +1,7 @@
 {
-  "name": "ipm",
+  "name": "iota-pm",
   "version": "0.0.1",
-  "description": "An IOTA node peer manager",
+  "description": "An IOTA IRI peer manager",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,7 +27,7 @@
     "url": "git+https://github.com/akashgoswami/ipm.git"
   },
   "bin": {
-    "ipm": "./index.js"
+    "iota-pm": "./index.js"
   },  
   "bugs": {
     "url": "https://github.com/akashgoswami/ipm/issues"
