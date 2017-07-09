@@ -7,17 +7,15 @@ To learn more about IOTA, please visit [iota.org](http://iota.org)
 
 ![IPM snapshot](/public/img/ipm.jpg)
 
-
 ## How to install
 
 To install this package, 
 
 > npm i -g iota-pm
 
-
 ## How to run
 
-*Note that before running this program, you should run your IOTA IRI or at least have a known URI which is accessible. *
+** Note: Before running this program, you should run your IOTA IRI or at least have a known IRI URI which is accessible. **
 
 > iota-pm 
 
