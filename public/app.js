@@ -30,7 +30,7 @@ var systemTemplate = {
 	<div class="col-xs-4">
 		<div class="p-a-md">
 			<h5>IRI Version </h5><h3 class="_700 m-y">  {{nodeInfo.appVersion}} 	</h3> 
-			<h5 class="_500">Neighbours</h5> <div class="h3 _700 m-y"> 	 {{nodeInfo.neighbors}}  </div>	
+			<h5 class="_500">Neighbours</h5> <div class="h3 _700 m-y"> 	 {{nodeInfo.neighbors}}  &nbsp; <a v-on:click="showNeighbors"> <span class="h5">Show List</span> </a></div>	
 			<h5>Add a new Peer</h5>
 			
 			<div class="row">
@@ -93,6 +93,19 @@ var systemTemplate = {
       //alert('Adding Peer ' + this.address + '!')
       // `event` is the native DOM event
       socket.emit('addPeer', { address: this.address });
+    },
+    showNeighbors: function (event){
+        var n = "";
+        vm.peers.forEach(function(peer){
+           n +=  peer.connectionType + "://" + peer.address + "\n"; 
+        });
+        var  display = "<pre class='code-preview text-left p-a'>"+ n + "</pre>";
+		swal({
+		  title:"List of Neighbours",
+		  html: display
+		});
+				
+
     }
   }      
 };

@@ -21,10 +21,10 @@ var Template =`
                 
                 <div class="list-group no-radius alt">
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>Total Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span> Random Transactions  </div> 
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfRandomTransactionRequests}}</span> Random Transactions  </div> 
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span> New Transactions  </div> 
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Invalid Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Sent Transactions </div> 
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfSentTransactions}}</span>Sent Transactions </div> 
                 </div>
                 </section>
         
