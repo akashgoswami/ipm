@@ -1,6 +1,6 @@
 {
   "name": "iota-pm",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "An IOTA IRI peer manager",
   "main": "index.js",
   "scripts": {
