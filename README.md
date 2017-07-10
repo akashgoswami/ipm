@@ -33,4 +33,8 @@ To view the dashboard, simply open a browser and point to http://127.0.0.1:8888
 
 ``` 
 
+## Donation
 
+This project is self-funded for the benefit of the community. If you like the project and wish to see more features being added, please consider donating at address mentioned below
+
+https://gist.github.com/akashgoswami/a7f0ae2daa1c97e4060e9c7296cfa7f3
