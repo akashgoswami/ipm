@@ -8,8 +8,19 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var async = require('async');
 var minimist = require('minimist');
+var basicAuth = require('express-basic-auth');
 
-app.use(express.static(__dirname+'/public'))
+var gNodeInfo = {};
+var gPeerInfo = [];
+var gTags = {};
+ 
+
+function generator(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
 var sockets = [];
 
 
@@ -18,6 +29,7 @@ var argv = minimist(process.argv.slice(2), {
     alias: {
         h: 'help',
         i: 'iri',
+        u: 'auth',        
         r: 'refresh',
         p: 'port'
     }
@@ -31,6 +43,9 @@ if (argv.refresh) {
     }
 }
 
+
+
+app.use(express.static(__dirname+'/public'));
 
 if (argv.help) printHelp();
 
@@ -109,6 +124,14 @@ io.on('connection', function (s) {
     }
   });
   
+  s.on('updateTag', function (data) {
+       gTags[data.address] = data.tag;
+  });
+  
+      
+       
+       
+  
 
 });
 
@@ -116,9 +139,6 @@ io.on('connection', function (s) {
 var iota = new IOTA({
     'provider': (argv.iri || 'http://localhost:14800')
 });
-
-var gNodeInfo = {};
-var gPeerInfo = [];
 
 function updateNodeInfo(){
     sockets.forEach(function (s){
@@ -128,7 +148,9 @@ function updateNodeInfo(){
 
 function updatePeerInfo(peer){
     gPeerInfo.forEach(function(peer){
+           peer.tag = gTags[peer.address] || 'Unknown Peer';
            sockets.forEach(function (s){
+                
                 s.emit('peerInfo', peer);
             });
     });

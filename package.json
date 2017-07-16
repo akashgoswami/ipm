@@ -1,6 +1,6 @@
 {
   "name": "iota-pm",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "An IOTA IRI peer manager",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "express": "^4.15.3",
+    "express-basic-auth": "^1.1.1",
     "gentelella": "^1.3.0",
     "iota.lib.js": "^0.3.0",
     "minimist": "^1.2.0",
@@ -28,7 +29,7 @@
   },
   "bin": {
     "iota-pm": "./index.js"
-  },  
+  },
   "bugs": {
     "url": "https://github.com/akashgoswami/ipm/issues"
   },

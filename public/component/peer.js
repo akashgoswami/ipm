@@ -1,17 +1,20 @@
 var Template =`
 
-      <div class="col-md-3">   
+      <div class="col-sm-3 min-h-500">   
          
         <section class="panel" v-bind:class="[deadPeer ? 'panel-danger' : 'panel-default']" > 
             <header class="panel-heading bg-light no-border"> 
                 <div class="clearfix"> 
                 <div class="clear"> 
                 <a href="#" class="btn btn-xs btn-rounded btn-danger m-xs pull-right" v-on:click="removePeer">X</a>
-               
-                <div class="h5 m-t-xs m-b-xs m-r-xs"> {{state.connectionType}}://{{state.address}}
               
-                </div> 
+               
+                <input class="h5" v-model="state.tag" v-on:keyup.enter="editTag" v-bind:class="[updating ? '' : 'tag-disabled']" :disabled="updating == 1 ? false : true" v-bind:size="state.tag.length"> 
 
+                <i v-on:click="editTag" v-bind:class="[updating ? 'fa fa-2x fa-check text-success' : 'fa fa-2x fa-pencil text-black-lt']"></i>
+
+                <div class="text-info text-md">{{state.connectionType}}://{{state.address}}</div>
+                
                 </div> 
                 </div> 
                 </header> 
@@ -19,8 +22,9 @@ var Template =`
                  <canvas :id="id" width="200" height="180" ></canvas>
                  </div>
                 
-                <div class="list-group no-radius alt">
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>Total Transactions  </div> 
+                <div class="list-group-alt no-radius">
+            
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>All Transactions  </div> 
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfRandomTransactionRequests}}</span> Random Transactions  </div> 
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span> New Transactions  </div> 
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Invalid Transactions  </div> 
@@ -38,6 +42,7 @@ var peer = Vue.component('peer', {
   template: Template,
   data: function (){
     return {
+       updating: false,
        id : this._uid
     };
   },
@@ -85,7 +90,13 @@ var peer = Vue.component('peer', {
             xAxes: [{
                 display: false
             }]
-        }
+        },
+        legend: {
+            display: true,
+            labels: {
+              boxWidth :10
+            }
+        }        
         
       }
     });
@@ -97,9 +108,18 @@ var peer = Vue.component('peer', {
       Object.assign(this.myChart.data,newData);
       
       this.myChart.update(); 
-    }
+    },
+    'state.tag': function (newData, oldData) {
+      //Object.assign(this.chartData,newData);
+      socket.emit('updateTag', { address: this.state.address, tag:newData });
+    },
+    
   },  
    methods: {
+    editTag: function (event) {
+      this.updating = !this.updating;
+    },
+ 
     removePeer: function (event) {
       // `this` inside methods points to the Vue instance
     

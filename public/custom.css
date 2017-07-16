@@ -3,3 +3,14 @@
     max-height: 200px;
     padding: 20px;
 }
+
+.tag-disabled {
+    padding: 2px;
+    background: transparent;
+    border:none;
+}
+
+.min-h-500
+{
+    min-height: 500px;
+}

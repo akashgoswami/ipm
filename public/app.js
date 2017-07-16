@@ -164,20 +164,20 @@ socket.on('peerInfo', function(info){
           datasets: [
             {
               label: 'All TX',
-              borderColor: '#f87979',
+              borderColor: '#333',
               backgroundColor: 'rgba(0,0,0,0)',
               data: []
             },
             {
               label: 'New TX',
-              borderColor: '#287979',
+              borderColor: '#5cb85c',
               backgroundColor: 'rgba(0,0,0,0)',
 
               data: []
             },
             {
               label: 'Sent TX',
-              borderColor: '#687979',
+              borderColor: '#03a9f4',
               backgroundColor: 'rgba(0,0,0,0)',
 
               data: []
