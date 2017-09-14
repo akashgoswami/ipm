@@ -135,7 +135,7 @@ var peer = Vue.component('peer', {
         socket.emit('removePeer', { address: this.state.connectionType +"://"+this.state.address });
         swal(
           'Deleted!',
-          'Your peer has been deleted.',
+          'Your peer has been deleted. Please also update your IRI config file (if required)' ,
           'success'
         )
         //this.$destroy();

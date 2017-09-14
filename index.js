@@ -9,11 +9,24 @@ var io = require('socket.io')(server);
 var async = require('async');
 var minimist = require('minimist');
 var basicAuth = require('express-basic-auth');
+var jsonfile = require('jsonfile')
 
 var gNodeInfo = {};
 var gPeerInfo = [];
 var gTags = {};
- 
+
+var tagFileName = (process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] || process.cwd()) +"/iota-pm.conf";
+
+jsonfile.readFile(tagFileName, function(err, obj) {
+      if (err) {
+          console.log("Unable to locate any previous tag file at", tagFileName);
+      }
+      else if (obj) {
+          console.log("Restored tags from ", tagFileName);          
+          gTags = Object.assign(gTags, obj);
+      }
+});
+
 
 function generator(length, chars) {
     var result = '';
@@ -58,12 +71,12 @@ function printHelp()
     console.log("Usage:");        
     console.log("iota-pm [--iri=iri_api_url] [--port=your_local_port] [--refresh=interval]");
     console.log("  -i --iri       = The API endpoint for IOTA IRI implementation (Full Node). ");
-    console.log("  -p --port      = Local server port where the dashboard web server should be running");    
+    console.log("  -p --port      = Local server IP and port where the dashboard web server should be running");    
     console.log("  -r --refresh   = Refresh interval in seconds for IRI statistics gathering (default 10s)");    
     console.log("  -h --help      = print this message");    
     console.log("");            
     console.log("Example.");            
-    console.log("iota-pm -i http://127.0.0.1:14800 -p 8888");            
+    console.log("iota-pm -i http://127.0.0.1:14800 -p 127.0.0.1:8888");            
     console.log("IPM will connect to IOTA endpoint and produce the status at localhost port 8888");            
     console.log("To view the dashboard, simply open a browser and point to http://127.0.0.1:8888");                
     console.log("");       
@@ -71,7 +84,11 @@ function printHelp()
 };
 
 
-
+function saveConfig (){
+    jsonfile.writeFile(tagFileName, gTags, {spaces: 2}, function (err) {
+    if (err) console.error(err);
+    });
+}
 
 io.on('connection', function (s) {
   sockets.push(s);
@@ -94,11 +111,11 @@ io.on('connection', function (s) {
             console.error(error);
             s.emit('result', error.message);
         } else {
-            console.log(result);
-            s.emit('result', "Peer added Successfully");
+            s.emit('result', "Peer added Successfully. Please also update your IRI config file (if required)");
             updatePeerInfo();
         }
         });
+        saveConfig();
     }
     catch(e){
         s.emit('result', e.message);
@@ -113,9 +130,7 @@ io.on('connection', function (s) {
             console.error(error);
             s.emit('result', error.message);
         } else {
-            console.log(result);
             s.emit('peerDeleted', data);            
-
         }
         });
     }
@@ -126,12 +141,8 @@ io.on('connection', function (s) {
   
   s.on('updateTag', function (data) {
        gTags[data.address] = data.tag;
+       saveConfig();
   });
-  
-      
-       
-       
-  
 
 });
 
@@ -150,7 +161,6 @@ function updatePeerInfo(peer){
     gPeerInfo.forEach(function(peer){
            peer.tag = gTags[peer.address] || 'Unknown Peer';
            sockets.forEach(function (s){
-                
                 s.emit('peerInfo', peer);
             });
     });
@@ -196,8 +206,18 @@ setInterval(function(){
     getSystemInfo();
 },30000);
 
-var port = argv.port || 8888;
+var port = 8888;
+var host = "127.0.0.1";
 
-console.log("Serving IOTA peer dashboard at http://localhost:"+port);
+if (typeof argv.port === 'string'){
+    var portArgs = argv.port.split(':');
+    port = portArgs[1];
+    host = portArgs[0];    
+}
+else if (argv.port){
+    port = argv.port;
+}
 
-server.listen(port);
+console.log("Serving IOTA peer dashboard at http://"+host+":"+port);
+
+server.listen(port,host);

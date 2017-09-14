@@ -68,7 +68,8 @@ var systemTemplate = {
   </div>
   `,
    "data" : {
-       nodeInfo : {
+      address: "",
+      nodeInfo : {
       appName: 'IRI Testnet',
       appVersion: '1.1.3.10',
       jreAvailableProcessors: 2,
