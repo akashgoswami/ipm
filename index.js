@@ -10,12 +10,14 @@ var async = require('async');
 var minimist = require('minimist');
 var basicAuth = require('express-basic-auth');
 var jsonfile = require('jsonfile')
+var fs = require('fs')
 
 var gNodeInfo = {};
 var gPeerInfo = [];
 var gTags = {};
 
 var tagFileName = (process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] || process.cwd()) +"/iota-pm.conf";
+var peersFileName = "/opt/iota/peers.conf";
 
 jsonfile.readFile(tagFileName, function(err, obj) {
       if (err) {
@@ -88,6 +90,11 @@ function saveConfig (){
     jsonfile.writeFile(tagFileName, gTags, {spaces: 2}, function (err) {
     if (err) console.error(err);
     });
+    console.log('Peers for IRI /etc/iri.conf', gPeerInfo.map(i=>{ return i.connectionType+'://'+i.address; }).join(' '));
+    fs.writeFile(peersFileName, gPeerInfo.map(i=>{ return i.connectionType+'://'+i.address; }).join(' '), {spaces: 2}, function (err) {
+    if (err) console.error(err);
+    else console.log('Wrote peers.conf file at '+peersFileName);
+    });
 }
 
 io.on('connection', function (s) {
@@ -133,6 +140,7 @@ io.on('connection', function (s) {
             s.emit('peerDeleted', data);            
         }
         });
+        saveConfig();
     }
     catch(e){
         s.emit('result', e.message);
