@@ -45,7 +45,3 @@ In Windows this will be C:\Users\username and Linux it will be $HOME. If none of
 ## Peer management
 The program doesn't manages peers configured in IRI config files. If you delete or add a peer via the UI, please make sure to update it also in the IRI config. 
 
-## Donation
-If you like the project and wish to see more features being added, please consider donating at address mentioned below
-
-https://gist.github.com/akashgoswami/a7f0ae2daa1c97e4060e9c7296cfa7f3
