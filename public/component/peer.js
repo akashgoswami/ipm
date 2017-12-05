@@ -24,11 +24,11 @@ var Template =`
                 
                 <div class="list-group-alt no-radius">
             
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>All Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfRandomTransactionRequests}}</span> Random Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span> New Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Invalid Transactions  </div> 
-                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfSentTransactions}}</span>Sent Transactions </div> 
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfSentTransactions}}</span>Sent Transactions</div>
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>Received Transactions</div>
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span>Received New Transactions</div>
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfRandomTransactionRequests}}</span>Received Random Transaction Requests</div>
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Received Invalid Transactions</div>
                 </div>
                 </section>
         
@@ -66,7 +66,7 @@ var peer = Vue.component('peer', {
               labels: [],
               datasets: [
                 {
-                  label: 'All TX',
+                  label: 'Rec TX',
               
                   data: []
                 },

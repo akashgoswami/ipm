@@ -164,7 +164,7 @@ socket.on('peerInfo', function(info){
           labels: [],
           datasets: [
             {
-              label: 'All TX',
+              label: 'Rec TX',
               borderColor: '#333',
               backgroundColor: 'rgba(0,0,0,0)',
               data: []
