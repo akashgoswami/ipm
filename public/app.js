@@ -93,7 +93,8 @@ var systemTemplate = {
       // `this` inside methods points to the Vue instance
       //alert('Adding Peer ' + this.address + '!')
       // `event` is the native DOM event
-      socket.emit('addPeer', { address: this.address });
+      var normalizedAddress = this.address.replace(/\s/g, "");
+      socket.emit('addPeer', { address: normalizedAddress });
     },
     showNeighbors: function (event){
         var n = "";
