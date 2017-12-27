@@ -200,8 +200,18 @@ socket.on('peerInfo', function(info){
 
 
 socket.on('nodeInfo', function(info){
- system.nodeInfo = info;
+    system.nodeInfo = info;
+
+    var favicon=new Favico();
+    var sync=document.getElementById('sync-favicon');
+    var nosync=document.getElementById('no-sync-favicon');
+    if(info.latestMilestoneIndex+exp == info.latestSolidSubtangleMilestoneIndex)
+      favicon.image(sync);
+    else
+      favicon.image(nosync);
 });
+
+
 
 socket.on('result', function(info){
 
@@ -211,3 +221,4 @@ swal('Response',
 );
 
 });
+exp = 0;
