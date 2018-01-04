@@ -1065,8 +1065,8 @@ a.list-group-item {
     padding-right: 0; }
 
 .row {
-  margin-left: -12px;
-  margin-right: -12px; }
+  margin-left: 0;
+  margin-right: 0; }
   .row [class*="col-"] {
     padding-left: 12px;
     padding-right: 12px; }
@@ -3623,7 +3623,7 @@ div.input-group > .select2-container > .selection {
   padding-bottom: 1rem !important; }
 
 .p-l {
-  padding-left: 1rem !important; }
+  padding-left: 0; }
 
 .p-x {
   padding-right: 1rem !important;
