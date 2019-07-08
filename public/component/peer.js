@@ -28,6 +28,7 @@ var Template =`
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfAllTransactions}}</span>Received Transactions</div>
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfNewTransactions}}</span>Received New Transactions</div>
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfRandomTransactionRequests}}</span>Received Random Transaction Requests</div>
+                <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfStaleTransactionRequests}}</span>Stale Transactions</div>
                 <div class="list-group-item" href="#"> <span class="badge bg-success">{{state.numberOfInvalidTransactions}}</span>Received Invalid Transactions</div>
                 </div>
                 </section>
