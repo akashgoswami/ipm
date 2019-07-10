@@ -13,7 +13,7 @@ var Template =`
 
                 <i v-on:click="editTag" v-bind:class="[updating ? 'fa fa-2x fa-check text-success' : 'fa fa-2x fa-pencil text-black-lt']"></i>
 
-                <div class="text-info text-md">{{state.connectionType}}://{{state.address}}</div>
+                <div class="text-info text-md">{{state.connectionType}}://{{state.address}} {{state.domain}}</div>
                 
                 </div> 
                 </div> 
