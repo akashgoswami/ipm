@@ -154,6 +154,9 @@ socket.on('peerInfo', function(info){
         obj.datasets[2].data.push(info.numberOfSentTransactions - item.numberOfSentTransactions);
         if ( obj.datasets[2].data.length > maxHistory) obj.datasets[2].data.shift();
 
+        obj.datasets[3].data.push(info.numberOfStaleTransactions - item.numberOfStaleTransactions);
+        if ( obj.datasets[3].data.length > maxHistory) obj.datasets[3].data.shift();
+
         Object.assign(item, info);
         
         Vue.set(item, "history", obj); 
@@ -180,6 +183,13 @@ socket.on('peerInfo', function(info){
             {
               label: 'Sent TX',
               borderColor: '#03a9f4',
+              backgroundColor: 'rgba(0,0,0,0)',
+
+              data: []
+            },
+           {
+              label: 'Stale TX',
+              borderColor: '#ff7f50',
               backgroundColor: 'rgba(0,0,0,0)',
 
               data: []
